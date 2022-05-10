@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from 'vue';
+import BaseButton from '/src/components/BaseButton.vue';
+import ButtonAdd from '/src/components/ButtonAdd.vue';
 import { useTodoList } from '/src/composables/useTodoList.js';
 
 const todoRef = ref('');
@@ -34,11 +36,6 @@ const deleteTodo = (id) => {
 const changeCheck = (id) => {
   check(id);
 };
-
-// const countFinMethod = () => {
-//   const finArr = todoListRef.value.filter((todo) => todo.checked);
-//   return finArr.length;
-// };
 </script>
 
 <template>
@@ -49,8 +46,10 @@ const changeCheck = (id) => {
       v-model="todoRef"
       placeholder=" ＋ TODOを入力"
     />
-    <button class="btn green" @click="editTodo" v-if="isEditRef">変更</button>
-    <button class="btn" @click="addTodo" v-else>追加</button>
+    <BaseButton color="green" @on-click="editTodo" v-if="isEditRef"
+      >変更</BaseButton
+    >
+    <ButtonAdd color="blue" @add-click="addTodo" v-else>追加</ButtonAdd>
   </div>
 
   <div class="box_list">
@@ -66,8 +65,8 @@ const changeCheck = (id) => {
         </label>
       </div>
       <div class="btns">
-        <button class="btn green" @click="showTodo(todo.id)">編</button>
-        <button class="btn pink" @click="deleteTodo(todo.id)">削</button>
+        <BaseButton color="green" @on-click="showTodo(todo.id)">編</BaseButton>
+        <BaseButton color="pink" @on-click="deleteTodo(todo.id)">削</BaseButton>
       </div>
     </div>
   </div>
