@@ -1,7 +1,18 @@
 <script setup>
 import { ref } from 'vue';
 const todoRef = ref('');
+
+// const todoListRef = ref([
+//   { id: 1, task: 'TODO1' },
+//   { id: 2, task: 'TODO2' },
+//   { id: 3, task: 'TODO3' },
+// ]);
+
+// ローカルストレージにtodoListRefが存在すればparseし、
+// 存在しなければundefinedになるため、空配列をセットする
 const todoListRef = ref([]);
+const todoList = localStorage.todoList;
+todoListRef.value = todoList ? JSON.parse(todoList) : [];
 
 const addTodo = () => {
   // ミリ秒
@@ -27,18 +38,9 @@ const addTodo = () => {
   </div>
 
   <div class="box_list">
-    <div class="todo_list">
+    <div class="todo_list" v-for="todo in todoListRef" :key="todo.id">
       <div class="todo">
-        <label><input type="checkbox" class="check" />TODO1</label>
-      </div>
-      <div class="btns">
-        <button class="btn green">編</button>
-        <button class="btn pink">削</button>
-      </div>
-    </div>
-    <div class="todo_list">
-      <div class="todo">
-        <label><input type="checkbox" class="check" />TODO2</label>
+        <label><input type="checkbox" class="check" />{{ todo.task }}</label>
       </div>
       <div class="btns">
         <button class="btn green">編</button>
