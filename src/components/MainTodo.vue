@@ -1,12 +1,26 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 import BaseButton from '/src/components/BaseButton.vue';
 import ButtonAdd from '/src/components/ButtonAdd.vue';
 import { useTodoList } from '/src/composables/useTodoList.js';
 
+// onMountedでTODO入力欄を取得
+onMounted(() => {
+  const inpMount = document.getElementById('inp').value;
+  console.log('inpMount=[' + inpMount + ']');
+});
+
 const todoRef = ref('');
 const isEditRef = ref(false);
 const { todoListRef, add, edit, show, del, check, countFin } = useTodoList();
+
+// setupでTODO入力欄を取得
+const inpSetup = document.getElementById('inp');
+console.log('inpSetup=[' + inpSetup + ']');
+
+onUpdated(() => {
+  console.log('onUpdated:', todoRef.value);
+});
 
 // 追加ボタン
 const addTodo = () => {
@@ -36,11 +50,14 @@ const deleteTodo = (id) => {
 const changeCheck = (id) => {
   check(id);
 };
+
+console.log('setup');
 </script>
 
 <template>
   <div class="box_input">
     <input
+      id="inp"
       type="text"
       class="todo_input"
       v-model="todoRef"
