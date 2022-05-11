@@ -1,19 +1,36 @@
 <script setup>
-import { watch, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { ref } from 'vue';
 
-const route = useRoute();
-const id = ref(route.params.id); // routesで設定した「:id」と同じ名前
-
-console.log('watch 外:', id);
-
-watch(route, () => {
-  id.value = route.params.id;
-  console.log('watch 内:', id.value);
-});
+const posts = ref([]);
+const fetchData = async () => {
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+  posts.value = await response.json();
+};
+fetchData();
 </script>
 
 <template>
   <h1>Blog Page</h1>
-  <p>Blog Id = {{ id }}</p>
+  <ul>
+    <li v-for="post in posts" :key="post.id">
+      {{ post.id }}
+      <router-link :to="`/blog/${post.id}`">{{ post.title }}</router-link>
+    </li>
+  </ul>
 </template>
+
+<style scoped>
+ul {
+  margin-top: 12px;
+}
+
+li {
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+li:hover {
+  background-color: #eee;
+}
+</style>
