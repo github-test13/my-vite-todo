@@ -16,7 +16,7 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    component: import('/src/pages/About.vue'),
+    component: () => import('/src/pages/About.vue'),
   },
   {
     path: '/:pathMatch(.*)*', // 存在しないアドレスにマッチするような指定
