@@ -16,6 +16,7 @@ fetchData();
 </script>
 
 <template>
+  <h1>Blog Dtl Page</h1>
   <div>
     <h1 class="title">{{ dtl.title }}</h1>
     <div class="dtl">{{ dtl.body }}</div>
